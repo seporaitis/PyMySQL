@@ -163,7 +163,7 @@ class Cursor(object):
         result = self._query(query)
         self._executed = query
         if isinstance(self._executed, str_type):
-            self._executed = self._executed.encode(self._get_db().encoding, 'surrogateescape')
+            self._executed = self._executed.encode(self._get_db().encoding, errors='replace')
         return result
 
     def executemany(self, query, args):

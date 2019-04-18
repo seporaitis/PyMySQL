@@ -3,7 +3,7 @@ from __future__ import print_function, absolute_import
 from functools import partial
 import re
 
-from ._compat import range_type, text_type, PY2
+from ._compat import range_type, str_type, text_type, PY2
 from . import err
 
 
@@ -162,6 +162,8 @@ class Cursor(object):
 
         result = self._query(query)
         self._executed = query
+        if isinstance(self._executed, str_type):
+            self._executed = self._executed.encode(self._get_db().encoding, 'surrogateescape')
         return result
 
     def executemany(self, query, args):
